@@ -1,6 +1,7 @@
 #include "bitmap_aos.hpp"
 #include "common/file_error.hpp"
 #include <fstream>
+#include <omp.h>
 
 namespace images::aos {
 
@@ -57,11 +58,25 @@ namespace images::aos {
     }
   }
 
+  // parallelize
   void bitmap_aos::to_gray() noexcept {
-    const auto max = std::ssize(pixels);
-    for (int i = 0; i < max; ++i) {
-      pixels[i] = pixels[i].to_gray_corrected();
-    }
+      omp_lock_t l;
+      omp_init_lock(&l);
+
+      const auto max = std::ssize(pixels);
+    #pragma omp parallel
+      {
+        #pragma omp barrier
+        #pragma omp for
+          for (int i = 0; i < max; ++i) {
+              const auto gray_level = pixels[i].to_gray_corrected();
+
+              omp_set_lock(&l);
+              pixels[i] = gray_level;
+              omp_unset_lock(&l);
+          }
+      };
+      omp_destroy_lock(&l);
   }
 
   bool bitmap_aos::is_gray() const noexcept {
@@ -80,6 +95,7 @@ namespace images::aos {
     constexpr auto gauss_size = std::ssize(gauss_kernel);
   }
 
+  // parallelize
   void bitmap_aos::gauss() noexcept {
     bitmap_aos result{*this};
     const auto num_pixels = std::ssize(pixels);
@@ -104,6 +120,7 @@ namespace images::aos {
     *this = result;
   }
 
+  // parallelize
   histogram bitmap_aos::generate_histogram() const noexcept {
     histogram histo;
     const int pixel_count = width() * height();
