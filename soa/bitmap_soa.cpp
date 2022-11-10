@@ -106,45 +106,53 @@ namespace images::soa {
 
   void bitmap_soa::gauss() noexcept {
       //PARALELIZE
+    omp_lock_t l;
+    omp_init_lock(&l);
     bitmap_soa result{*this};
     const auto num_pixels = std::ssize(pixels[red_channel]);
     const auto [pixels_width, pixels_height] = get_size();
     for (int pixel_index = 0; pixel_index < num_pixels; ++pixel_index) {
-      const auto [row, column] = get_pixel_position(pixel_index);
-      color_accumulator accum;
-      for (int gauss_index = 0; gauss_index < gauss_size; ++gauss_index) {
-        const int column_offset = (gauss_index % 5) - 2;
-        const int j = column + column_offset;
-        if (j < 0 || j >= pixels_width) { continue; }
-        const int row_offset = (gauss_index / 5) - 2;
-        const int i = row + row_offset;
-        if (i < 0 || i >= pixels_height) { continue; }
-        // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
-        const int gauss_value = gauss_kernel[gauss_index];
-        const auto gauss_pixel_index = index(i, j);
-        accum += get_pixel(gauss_pixel_index) * gauss_value;
-      }
-      result.set_pixel(pixel_index, pixel{accum / gauss_norm});
+        const auto [row, column] = get_pixel_position(pixel_index);
+        color_accumulator accum;
+        for (int gauss_index = 0; gauss_index < gauss_size; ++gauss_index) {
+            const int column_offset = (gauss_index % 5) - 2;
+            const int j = column + column_offset;
+            if (j < 0 || j >= pixels_width) { continue; }
+            const int row_offset = (gauss_index / 5) - 2;
+            const int i = row + row_offset;
+            if (i < 0 || i >= pixels_height) { continue; }
+            // NOLINTNEXTLINE(cppcoreguidelines-pro-bounds-constant-array-index)
+            const int gauss_value = gauss_kernel[gauss_index];
+            const auto gauss_pixel_index = index(i, j);
+            accum += get_pixel(gauss_pixel_index) * gauss_value;
+        }
+        result.set_pixel(pixel_index, pixel{accum / gauss_norm});
     }
     *this = result;
   }
 
   histogram bitmap_soa::generate_histogram() const noexcept {
       //PARALELIZE
+    omp_lock_t l;
+    omp_init_lock(&l);
+
     histogram histo;
     const int pixel_count = width() * height();
-    #pragma omp parallel for
-    #pragma omp barrier
-        for (int i = 0; i < pixel_count; ++i) {
-          //lock(mutex)
-          histo.add_red(pixels[red_channel][i]);
-          histo.add_green(pixels[green_channel][i]);
-          histo.add_blue(pixels[blue_channel][i]);
-          //unlock(mutex)
-        }
-    //Implicit barrier
-    return histo;
 
+    #pragma omp parallel
+    {
+        #pragma omp barrier
+        #pragma omp for
+        for (int i = 0; i < pixel_count; ++i) {
+            omp_set_lock(&l);
+            histo.add_red(pixels[red_channel][i]);
+            histo.add_green(pixels[green_channel][i]);
+            histo.add_blue(pixels[blue_channel][i]);
+            omp_unset_lock(&l);
+        }
+    };
+    omp_destroy_lock(&l);
+    return histo;
   }
 
   void bitmap_soa::print_info(std::ostream & os) const noexcept {
