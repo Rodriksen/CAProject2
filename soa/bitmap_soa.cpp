@@ -63,6 +63,7 @@ namespace images::soa {
   }
 
   void bitmap_soa::to_gray() noexcept {
+      //ARALELIZE
     const auto max = header.image_size();
     for (long i = 0; i < max; ++i) {
       const auto gray_level = to_gray_corrected(pixels[red_channel][i], pixels[green_channel][i],
