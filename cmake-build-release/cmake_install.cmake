@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2
+# Install script for directory: C:/Users/Marta/Documents/GitHub/CAProject2
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,27 +39,17 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/common/cmake_install.cmake")
+  include("C:/Users/Marta/Documents/GitHub/CAProject2/cmake-build-release/common/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/aos/cmake_install.cmake")
+  include("C:/Users/Marta/Documents/GitHub/CAProject2/cmake-build-release/aos/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/soa/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-build/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/utest/cmake_install.cmake")
+  include("C:/Users/Marta/Documents/GitHub/CAProject2/cmake-build-release/soa/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -70,5 +60,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/Marta/Documents/GitHub/CAProject2/cmake-build-release/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
