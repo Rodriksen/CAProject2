@@ -1,0 +1,5 @@
+if(EXISTS "C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/utest/utest[1]_tests.cmake")
+  include("C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/utest/utest[1]_tests.cmake")
+else()
+  add_test(utest_NOT_BUILT utest_NOT_BUILT)
+endif()

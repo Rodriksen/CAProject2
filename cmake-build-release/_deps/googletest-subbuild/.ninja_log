@@ -1,0 +1,21 @@
+# ninja log v5
+2	552	6897715482402808	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	d76acd9bac9bf381
+2	552	6897715482402808	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-mkdir	d76acd9bac9bf381
+554	9230	6897715569170973	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	4f71f6ff0d91d11
+554	9230	6897715569170973	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-download	4f71f6ff0d91d11
+9231	9872	0	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	14f5527ad66b1f
+9231	9872	0	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-update	14f5527ad66b1f
+9872	10252	6897715579405659	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	db06b591f9abe441
+9872	10252	6897715579405659	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-patch	db06b591f9abe441
+10253	10504	6897715581956663	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	25903caf2b4263c1
+10253	10504	6897715581956663	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-configure	25903caf2b4263c1
+10504	10879	6897715585653149	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	89558a2d13fb7d66
+10504	10879	6897715585653149	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-build	89558a2d13fb7d66
+10880	11278	6897715589637036	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	219c9eb86ef5a136
+10880	11278	6897715589637036	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-install	219c9eb86ef5a136
+11279	11661	6897715593422956	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	b39c880f354a2d2d
+11279	11661	6897715593422956	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-test	b39c880f354a2d2d
+11662	12351	6897715600390515	CMakeFiles/googletest-populate-complete	40de0b0aed17d839
+11662	12351	6897715600390515	googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	40de0b0aed17d839
+11662	12351	6897715600390515	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/CMakeFiles/googletest-populate-complete	40de0b0aed17d839
+11662	12351	6897715600390515	C:/Users/sandr/OneDrive/Documentos/GitHub/CAProject2/cmake-build-release/_deps/googletest-subbuild/googletest-populate-prefix/src/googletest-populate-stamp/googletest-populate-done	40de0b0aed17d839
