@@ -122,12 +122,24 @@ namespace images::aos {
 
   // parallelize
   histogram bitmap_aos::generate_histogram() const noexcept {
-    histogram histo;
-    const int pixel_count = width() * height();
-    for (int i = 0; i < pixel_count; ++i) {
-      histo.add_color(pixels[i]);
-    }
-    return histo;
+      omp_lock_t l;
+      omp_init_lock(&l);
+
+      histogram histo;
+      const int pixel_count = width() * height();
+
+    #pragma omp parallel
+      {
+        #pragma omp barrier
+        #pragma omp for
+          for (int i = 0; i < pixel_count; ++i) {
+              omp_set_lock(&l);
+              histo.add_color(pixels[i]);
+              omp_unset_lock(&l);
+          }
+      };
+      omp_destroy_lock(&l);
+      return histo;
   }
 
   void bitmap_aos::print_info(std::ostream & os) const noexcept {
