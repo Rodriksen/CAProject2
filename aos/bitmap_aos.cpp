@@ -130,7 +130,7 @@ namespace images::aos {
       histogram histo;
       const int pixel_count = width() * height();
 
-    #pragma omp parallel
+    #pragma omp parallel shared(l, histo, pixel_count)
       {
         #pragma omp barrier
         #pragma omp for

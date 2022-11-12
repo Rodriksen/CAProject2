@@ -70,7 +70,7 @@ namespace images::soa {
       omp_lock_t l;
       omp_init_lock(&l);
       const auto max = header.image_size();
-     #pragma omp parallel
+     #pragma omp parallel shared(max, l)
       {
         #pragma omp barrier
         #pragma omp for
@@ -152,7 +152,7 @@ namespace images::soa {
     histogram histo;
     const int pixel_count = width() * height();
 
-    #pragma omp parallel
+    #pragma omp parallel shared(l, histo, pixel_count)
     {
         #pragma omp barrier
         #pragma omp for
