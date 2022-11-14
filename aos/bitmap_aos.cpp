@@ -101,7 +101,9 @@ namespace images::aos {
     bitmap_aos result{*this};
     const auto num_pixels = std::ssize(pixels);
     const auto [pixels_width, pixels_height] = get_size();
-
+    #pragma omp parallel shared(result, num_pixels, pixels::pixels_width , pixels::pixels_height)
+    {
+    #pragma omp for collapse(2)
     for (int pixel_index = 0; pixel_index < num_pixels; ++pixel_index) {
       const auto [row, column] = get_pixel_position(pixel_index);
       color_accumulator accum;
@@ -119,6 +121,7 @@ namespace images::aos {
       }
       result.pixels[pixel_index] = accum / gauss_norm;
     }
+  }
     *this = result;
   }
 
