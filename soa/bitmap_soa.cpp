@@ -103,14 +103,13 @@ namespace images::soa {
     const auto num_pixels = std::ssize(pixels[red_channel]);
     const auto [pixels_width, pixels_height] = get_size();
 
-    #pragma omp parallel for collapse(2)
-
-
-
+    #pragma omp parallel for
     for (int pixel_index = 0; pixel_index < num_pixels; ++pixel_index) {
 
         const auto [row, column] = get_pixel_position(pixel_index);
         color_accumulator accum;
+
+        #pragma omp parallel for
         for (int gauss_index = 0; gauss_index < gauss_size; ++gauss_index) {
 
             const int column_offset = (gauss_index % 5) - 2;
