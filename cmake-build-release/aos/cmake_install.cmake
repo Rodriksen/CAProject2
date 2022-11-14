@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/Marta/Documents/GitHub/CAProject2/aos
+# Install script for directory: C:/Users/rodri/Documents/GitHub/CAProject2/aos
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

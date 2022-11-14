@@ -98,23 +98,19 @@ namespace images::soa {
 
   void bitmap_soa::gauss() noexcept {
     //PARALELIZE
-    omp_lock_t l;
-    omp_init_lock(&l);
     bitmap_soa result{*this};
 
     const auto num_pixels = std::ssize(pixels[red_channel]);
     const auto [pixels_width, pixels_height] = get_size();
 
-    #pragma omp parallel
-    {
-        #pragma omp barrier
-        #pragma omp for
+    #pragma omp parallel for collapse(2)
+
+
 
     for (int pixel_index = 0; pixel_index < num_pixels; ++pixel_index) {
-        omp_set_lock(&l);
+
         const auto [row, column] = get_pixel_position(pixel_index);
         color_accumulator accum;
-        #pragma omp for
         for (int gauss_index = 0; gauss_index < gauss_size; ++gauss_index) {
 
             const int column_offset = (gauss_index % 5) - 2;
@@ -129,11 +125,10 @@ namespace images::soa {
             accum += get_pixel(gauss_pixel_index) * gauss_value;
         }
         result.set_pixel(pixel_index, pixel{accum / gauss_norm});
-        omp_unset_lock(&l);
+
     }
-    };
+
     *this = result;
-    omp_destroy_lock(&l);
   }
 
   histogram bitmap_soa::generate_histogram() const noexcept {
