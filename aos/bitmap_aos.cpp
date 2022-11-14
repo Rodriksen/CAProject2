@@ -60,24 +60,13 @@ namespace images::aos {
 
   // parallelize
   void bitmap_aos::to_gray() noexcept {
-      omp_lock_t l;
-      omp_init_lock(&l);
       const auto max = std::ssize(pixels);
 
-    #pragma omp parallel shared(max, l)
-      {
-
-        #pragma omp barrier
-        #pragma omp for
-          for (int i = 0; i < max; ++i) {
-              const auto gray_level = pixels[i].to_gray_corrected();
-
-              omp_set_lock(&l);
-              pixels[i] = gray_level;
-              omp_unset_lock(&l);
-          }
-      };
-      omp_destroy_lock(&l);
+    #pragma omp parallel for
+      for (int i = 0; i < max; ++i) {
+          const auto gray_level = pixels[i].to_gray_corrected();
+          pixels[i] = gray_level;
+      }
   }
 
   bool bitmap_aos::is_gray() const noexcept {
@@ -132,8 +121,7 @@ namespace images::aos {
 
     #pragma omp parallel shared(l, histo, pixel_count)
       {
-        #pragma omp barrier
-        #pragma omp for
+        #pragma omp parallel for
           for (int i = 0; i < pixel_count; ++i) {
               omp_set_lock(&l);
               histo.add_color(pixels[i]);

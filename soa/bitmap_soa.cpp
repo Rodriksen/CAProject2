@@ -67,24 +67,16 @@ namespace images::soa {
 
   void bitmap_soa::to_gray() noexcept {
       //PARALELIZE
-      omp_lock_t l;
-      omp_init_lock(&l);
       const auto max = header.image_size();
-     #pragma omp parallel shared(max, l)
-      {
-        #pragma omp barrier
-        #pragma omp for
-          for (long i = 0; i < max; ++i) {
-              const auto gray_level = to_gray_corrected(pixels[red_channel][i], pixels[green_channel][i],
-                                                        pixels[blue_channel][i]);
-              omp_set_lock(&l);
-              pixels[red_channel][i] = gray_level;
-              pixels[green_channel][i] = gray_level;
-              pixels[blue_channel][i] = gray_level;
-              omp_unset_lock(&l);
-          }
-      };
-      omp_destroy_lock(&l);
+
+    #pragma omp parallel for
+      for (long i = 0; i < max; ++i) {
+          const auto gray_level = to_gray_corrected(pixels[red_channel][i], pixels[green_channel][i],
+                                                    pixels[blue_channel][i]);
+          pixels[red_channel][i] = gray_level;
+          pixels[green_channel][i] = gray_level;
+          pixels[blue_channel][i] = gray_level;
+      }
   }
 
   bool bitmap_soa::is_gray() const noexcept {
