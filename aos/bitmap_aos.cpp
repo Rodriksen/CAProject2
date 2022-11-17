@@ -118,22 +118,26 @@ namespace images::aos {
 
   // parallelize
   histogram bitmap_aos::generate_histogram() const noexcept {
-      omp_lock_t l;
-      omp_init_lock(&l);
-
       histogram histo;
       const int pixel_count = width() * height();
 
-    #pragma omp parallel shared(l, histo, pixel_count)
+      int num_threads = 0;
+    #pragma omp parallel
+      num_threads = omp_get_num_threads();
+
+      std::vector<histogram> local_channels(num_threads);
+
+    #pragma omp parallel
       {
-        #pragma omp parallel for
+        #pragma omp for
           for (int i = 0; i < pixel_count; ++i) {
-              omp_set_lock(&l);
-              histo.add_color(pixels[i]);
-              omp_unset_lock(&l);
+              local_channels[omp_get_thread_num()].add_color(pixels[i]);
           }
       };
-      omp_destroy_lock(&l);
+
+      for(int n = 0; n < num_threads; n++){
+          histo.add_thread_value(local_channels[n]);
+      }
       return histo;
   }
 
