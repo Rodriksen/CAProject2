@@ -159,8 +159,8 @@ CMakeFiles/img-aos.dir/clean:
 # Target rules for target CMakeFiles/img-soa.dir
 
 # All Build rule for target.
-CMakeFiles/img-soa.dir/all: soa/CMakeFiles/soa.dir/all
 CMakeFiles/img-soa.dir/all: common/CMakeFiles/common.dir/all
+CMakeFiles/img-soa.dir/all: soa/CMakeFiles/soa.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\img-soa.dir\build.make CMakeFiles/img-soa.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\img-soa.dir\build.make CMakeFiles/img-soa.dir/build
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\Marta\Documents\GitHub\CAProject2\cmake-build-release\CMakeFiles --progress-num=12,13 "Built target img-soa"
