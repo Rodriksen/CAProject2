@@ -1,0 +1,3 @@
+"C:\Program Files\JetBrains\CLion 2022.2.2\bin\cmake\win\bin\cmake.exe" -E rm -f CMakeFiles\img-soa.dir/objects.a
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ar.exe qc CMakeFiles\img-soa.dir/objects.a @CMakeFiles\img-soa.dir\objects1.rsp
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\G__~1.EXE -march=native -fopenmp -Wl,--whole-archive CMakeFiles\img-soa.dir/objects.a -Wl,--no-whole-archive -o img-soa.exe -Wl,--out-implib,libimg-soa.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\img-soa.dir\linklibs.rsp

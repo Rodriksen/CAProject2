@@ -1,0 +1,2 @@
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ar.exe qc libcommon.a CMakeFiles/common.dir/progargs.cpp.obj CMakeFiles/common.dir/bitmap_header.cpp.obj CMakeFiles/common.dir/pixel.cpp.obj CMakeFiles/common.dir/histogram.cpp.obj CMakeFiles/common.dir/file_error.cpp.obj CMakeFiles/common.dir/normalized_pixel.cpp.obj
+C:\PROGRA~1\JETBRA~1\CLION2~1.2\bin\mingw\bin\ranlib.exe libcommon.a
