@@ -68,7 +68,7 @@ namespace images::soa {
   void bitmap_soa::to_gray() noexcept {
       const auto max = header.image_size();
 
-    #pragma omp parallel for
+    #pragma omp parallel for schedule(runtime)
       for (long i = 0; i < max; ++i) {
           const auto gray_level = to_gray_corrected(pixels[red_channel][i], pixels[green_channel][i],
                                                     pixels[blue_channel][i]);
@@ -102,7 +102,7 @@ namespace images::soa {
 
     #pragma omp parallel
       {
-        #pragma omp for
+        #pragma omp for schedule(runtime)
           for (int pixel_index = 0; pixel_index < num_pixels; ++pixel_index) {
               const auto [row, column] = get_pixel_position(pixel_index);
               color_accumulator accum;
@@ -138,7 +138,7 @@ namespace images::soa {
 
     #pragma omp parallel
       {
-        #pragma omp for
+        #pragma omp for schedule(runtime)
           for (int i = 0; i < pixel_count; ++i) {
               local_channels[omp_get_thread_num()].add_red(pixels[red_channel][i]);
               local_channels[omp_get_thread_num()].add_green(pixels[green_channel][i]);

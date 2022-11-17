@@ -62,7 +62,7 @@ namespace images::aos {
   void bitmap_aos::to_gray() noexcept {
       const auto max = std::ssize(pixels);
 
-    #pragma omp parallel for
+    #pragma omp parallel for schedule(runtime)
       for (int i = 0; i < max; ++i) {
           pixels[i] = pixels[i].to_gray_corrected();
       }
@@ -93,7 +93,7 @@ namespace images::aos {
 
     #pragma omp parallel
       {
-        #pragma omp for
+        #pragma omp for schedule(runtime)
           for (int pixel_index = 0; pixel_index < num_pixels; ++pixel_index) {
               const auto [row, column] = get_pixel_position(pixel_index);
               color_accumulator accum;
@@ -129,7 +129,7 @@ namespace images::aos {
 
     #pragma omp parallel
       {
-        #pragma omp for
+        #pragma omp for schedule(runtime)
           for (int i = 0; i < pixel_count; ++i) {
               local_channels[omp_get_thread_num()].add_color(pixels[i]);
           }
