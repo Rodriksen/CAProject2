@@ -3,6 +3,7 @@
 
 #include "common/pixel.hpp"
 
+#include <utility>
 #include <vector>
 #include <cstdint>
 #include <filesystem>
@@ -20,6 +21,14 @@ namespace images::common {
     void add_green(uint8_t g) noexcept { channels[green_channel][g]++; }
 
     void add_blue(uint8_t b) noexcept { channels[blue_channel][b]++; }
+
+    void add_thread_value(const histogram& local){
+        for(int k = 0; k < 256; k++){
+            channels[red_channel][k] += local.channels[red_channel][k];
+            channels[green_channel][k] += local.channels[green_channel][k];
+            channels[blue_channel][k] += local.channels[blue_channel][k];
+        }
+    }
 
     [[nodiscard]] int get_red_frequency(uint8_t v) const noexcept {
       return channels[red_channel][v];

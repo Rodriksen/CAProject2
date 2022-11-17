@@ -131,27 +131,29 @@ namespace images::soa {
   }
 
   histogram bitmap_soa::generate_histogram() const noexcept {
-      //PARALELIZE
-    omp_lock_t l;
-    omp_init_lock(&l);
+      histogram histo;
+      const int pixel_count = width() * height();
 
-    histogram histo;
-    const int pixel_count = width() * height();
+      int num_threads = 0;
+    #pragma omp parallel
+      num_threads = omp_get_num_threads();
 
-    #pragma omp parallel shared(l, histo, pixel_count)
-    {
-        #pragma omp barrier
+      std::vector<histogram> local_channels(num_threads);
+
+    #pragma omp parallel
+      {
         #pragma omp for
-        for (int i = 0; i < pixel_count; ++i) {
-            omp_set_lock(&l);
-            histo.add_red(pixels[red_channel][i]);
-            histo.add_green(pixels[green_channel][i]);
-            histo.add_blue(pixels[blue_channel][i]);
-            omp_unset_lock(&l);
-        }
-    };
-    omp_destroy_lock(&l);
-    return histo;
+          for (int i = 0; i < pixel_count; ++i) {
+              local_channels[omp_get_thread_num()].add_red(pixels[red_channel][i]);
+              local_channels[omp_get_thread_num()].add_green(pixels[green_channel][i]);
+              local_channels[omp_get_thread_num()].add_blue(pixels[blue_channel][i]);
+          }
+      };
+
+      for(int n = 0; n < num_threads; n++){
+          histo.add_thread_value(local_channels[n]);
+      }
+      return histo;
   }
 
   void bitmap_soa::print_info(std::ostream & os) const noexcept {
